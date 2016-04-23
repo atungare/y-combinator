@@ -1,6 +1,6 @@
-var Y = function (f) {
+var freeY = function (f) {
   return f(function(x) {
-    return Y(f)(x);
+    return freeY(f)(x);
   });
 };
 
@@ -10,7 +10,7 @@ function almostFactorial (fact) {
   };
 }
 
-var workingFact = Y(almostFactorial)
+var workingFact = freeY(almostFactorial)
 console.log(workingFact(10));
 
 function partFactorial (self) {
@@ -18,6 +18,21 @@ function partFactorial (self) {
   return function (x) { return h(self(self))(x); };
 }
 
-var factorial = partFactorial(partFactorial);
+var somewhatFact = partFactorial(partFactorial);
+console.log(somewhatFact(10));
 
+var Y = function (f) {
+  var g = function (h) {
+    return function () {
+      return f(h(h)).apply(null, arguments)
+    };
+  };
+
+  return g(g);
+};
+
+var factorial = Y(almostFactorial);
 console.log(factorial(10));
+
+
+
