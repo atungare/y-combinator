@@ -6,24 +6,18 @@ var Y = function (f) {
 
 function almostFactorial (fact) {
   return function (n) {
-    if (n === 0) {
-      return 1;
-    } else {
-      return n * fact(n - 1);
-    }
+    return (n === 0) ? 1 : (n * fact(n - 1));
   };
 }
 
+var workingFact = Y(almostFactorial)
+console.log(workingFact(10));
+
 function partFactorial (self) {
-  return function (f) {
-    return function (n) {
-      if (n === 0) {
-        return 1;
-      } else {
-        return n * f()(n - 1);
-      }
-    };
-  }(function () { return self(self); });
+  function h (f, n) {
+    return (n === 0) ? 1 : (n * f(n - 1));
+  }
+  return function (x) { return h(self(self), x) };
 }
 
 var factorial = partFactorial(partFactorial);
