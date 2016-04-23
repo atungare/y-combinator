@@ -9,5 +9,12 @@
         1
         (* n (fact (- n 1)))))))
 
-(def factorial (Y almostFact))
+(def partFactorial
+  (fn [self]
+   (fn [n]
+     (if (= n 0)
+       1
+       (* n ((self self) (- n 1)))))))
+
+(def factorial (partFactorial partFactorial))
 
