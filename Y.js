@@ -14,6 +14,16 @@ function almostFactorial (fact) {
   };
 }
 
-var factorial = Y(almostFactorial);
+function partFactorial (self) {
+  return function (n) {
+    if (n === 0) {
+      return 1;
+    } else {
+      return n * (self(self)(n - 1));
+    }
+  };
+}
+
+var factorial = partFactorial(partFactorial);
 
 console.log(factorial(10));
