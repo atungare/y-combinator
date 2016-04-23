@@ -15,13 +15,15 @@ function almostFactorial (fact) {
 }
 
 function partFactorial (self) {
-  return function (n) {
-    if (n === 0) {
-      return 1;
-    } else {
-      return n * (self(self)(n - 1));
-    }
-  };
+  return function (f) {
+    return function (n) {
+      if (n === 0) {
+        return 1;
+      } else {
+        return n * f()(n - 1);
+      }
+    };
+  }(function () { return self(self); });
 }
 
 var factorial = partFactorial(partFactorial);
