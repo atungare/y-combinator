@@ -90,10 +90,10 @@ function makeLength (makeLength) {
 }
 
 var Y = function (le) {
-  return function (maker) {
-    return maker(maker);
-  }(function (maker) {
-    return le(function (x) { return maker(maker)(x); });
+  return function (f) {
+    return f(f);
+  }(function (f) {
+    return le(function (x) { return f(f)(x); });
   });
 };
 
@@ -106,6 +106,18 @@ var len = Y(function (length) {
     }
   }
 });
+
+var factorial = Y(function (fact) {
+  return function (n) {
+    if (n <= 1) {
+      return 1;
+    } else {
+      return n*fact(n-1);
+    }
+  }
+});
+
+console.log(factorial(4));
 
 console.log(len([]))
 console.log(len([1]))
