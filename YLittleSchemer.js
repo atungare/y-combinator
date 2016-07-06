@@ -79,19 +79,20 @@ function len1 (list) {
 }
 
 
-function makeLength (length) {
+function makeLength (makeLength) {
   return function (list) {
     if (list.length === 0) {
       return 0;
     } else {
-      return 1 + length(list.slice(1));
+      return 1 + makeLength(list.slice(1));
     }
   }
 }
 
-var l0 = makeLength(eternity)
-var l1 = makeLength(makeLength(eternity));
-var l2 = makeLength(makeLength(makeLength(eternity)));
+var l0 = makeLength(makeLength);
+var l1 = makeLength(makeLength(makeLength));
+var l2 = makeLength(makeLength(makeLength(makeLength)));
 
-console.log(l1([]))
-console.log(l1([1]))
+console.log(l2([]))
+console.log(l2([1]))
+console.log(l2([1,3]))
