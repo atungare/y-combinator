@@ -92,13 +92,15 @@ function makeLength (makeLength) {
 var len = function (makeLength) {
   return makeLength(makeLength);
 }(function (makeLength) {
-  return function (list) {
-    if (list.length === 0) {
-      return 0;
-    } else {
-      return 1 + makeLength(makeLength)(list.slice(1));
+  return function (length) {
+    return function (list) {
+      if (list.length === 0) {
+        return 0;
+      } else {
+        return 1 + length()(list.slice(1));
+      }
     }
-  }
+  }(function () { return makeLength(makeLength); });
 })
 
 console.log(len([]))
