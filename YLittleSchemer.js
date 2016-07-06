@@ -84,15 +84,23 @@ function makeLength (makeLength) {
     if (list.length === 0) {
       return 0;
     } else {
-      return 1 + makeLength(list.slice(1));
+      return 1 + makeLength(makeLength)(list.slice(1));
     }
   }
 }
 
-var l0 = makeLength(makeLength);
-var l1 = makeLength(makeLength(makeLength));
-var l2 = makeLength(makeLength(makeLength(makeLength)));
+var len = function (makeLength) {
+  return makeLength(makeLength);
+}(function (makeLength) {
+  return function (list) {
+    if (list.length === 0) {
+      return 0;
+    } else {
+      return 1 + makeLength(makeLength)(list.slice(1));
+    }
+  }
+})
 
-console.log(l2([]))
-console.log(l2([1]))
-console.log(l2([1,3]))
+console.log(len([]))
+console.log(len([1]))
+console.log(len([1,3]))
