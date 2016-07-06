@@ -89,21 +89,23 @@ function makeLength (makeLength) {
   }
 }
 
-var len = function (le) {
-  return function (makeLength) {
-    return makeLength(makeLength);
-  }(function (makeLength) {
-    return le(function (x) { return makeLength(makeLength)(x); });
+var Y = function (le) {
+  return function (maker) {
+    return maker(maker);
+  }(function (maker) {
+    return le(function (x) { return maker(maker)(x); });
   });
-}(function (length) {
-    return function (list) {
-      if (list.length === 0) {
-        return 0;
-      } else {
-        return 1 + length(list.slice(1));
-      }
+};
+
+var len = Y(function (length) {
+  return function (list) {
+    if (list.length === 0) {
+      return 0;
+    } else {
+      return 1 + length(list.slice(1));
     }
-  })
+  }
+});
 
 console.log(len([]))
 console.log(len([1]))
