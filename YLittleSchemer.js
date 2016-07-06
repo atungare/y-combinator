@@ -89,10 +89,13 @@ function makeLength (makeLength) {
   }
 }
 
-var len = function (makeLength) {
-  return makeLength(makeLength);
-}(function (makeLength) {
-  return function (length) {
+var len = function (le) {
+  return function (makeLength) {
+    return makeLength(makeLength);
+  }(function (makeLength) {
+    return le(function (x) { return makeLength(makeLength)(x); });
+  });
+}(function (length) {
     return function (list) {
       if (list.length === 0) {
         return 0;
@@ -100,8 +103,7 @@ var len = function (makeLength) {
         return 1 + length(list.slice(1));
       }
     }
-  }(function (x) { return makeLength(makeLength)(x); });
-})
+  })
 
 console.log(len([]))
 console.log(len([1]))
