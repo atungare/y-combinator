@@ -77,3 +77,21 @@ function len1 (list) {
     return 1 + len0(list.slice(1));
   }
 }
+
+
+function makeLength (length) {
+  return function (list) {
+    if (list.length === 0) {
+      return 0;
+    } else {
+      return 1 + length(list.slice(1));
+    }
+  }
+}
+
+var l0 = makeLength(eternity)
+var l1 = makeLength(makeLength(eternity));
+var l2 = makeLength(makeLength(makeLength(eternity)));
+
+console.log(l1([]))
+console.log(l1([1]))
