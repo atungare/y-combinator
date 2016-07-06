@@ -97,10 +97,10 @@ var len = function (makeLength) {
       if (list.length === 0) {
         return 0;
       } else {
-        return 1 + length()(list.slice(1));
+        return 1 + length(list.slice(1));
       }
     }
-  }(function () { return makeLength(makeLength); });
+  }(function (x) { return makeLength(makeLength)(x); });
 })
 
 console.log(len([]))
