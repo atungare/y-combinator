@@ -34,5 +34,25 @@ var Y = function (f) {
 var factorial = Y(almostFactorial);
 console.log(factorial(10));
 
+function almostReduce (red) {
+  return function (arr, fn, init) {
+    if (arr.length === 0) {
+      return init;
+    }
+
+    let item = arr.pop()
+    let acc = red(arr, fn, init);
+
+    return fn(acc, item)
+  }
+}
+
+var reduceArr = Y(almostReduce);
+
+console.log(reduceArr([1,2,3], (a, i) => a + i, 0));
+
+
+
+
 
 
